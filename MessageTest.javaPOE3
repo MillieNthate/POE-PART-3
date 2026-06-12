@@ -1,0 +1,193 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ */
+
+package com.mycompany.messagetest;
+
+/**
+ *
+ * @author Millie
+ */
+public class MessageTest {
+    @Test
+    public void testSentMessagesArrayPopulated() {
+        Message.sentMessage.clear();
+        
+        Messsage m1 = 
+                new Message(
+                        "+27816621422", 
+                        "Did you get the cake?", 
+                        1
+                );
+        Message m4 = 
+                new Message(
+                        "0683170147", 
+                         "It it dinner time !",
+                        4
+                );
+        m1.sentMessage(1);
+        m4.sentMessage(1);
+        
+        assertEquals(
+                 "Did you get the cake?", 
+                  Message.sentMessages.get(0)
+                          .getMessageText()
+        );
+        assertEquals(
+                "It is dinner time !", 
+                Message.sentMessages.get(1)
+                        .getMessageText()
+        );
+    } 
+    @Test
+    public void testLongestMessage() {
+        Message.storedMesages.clear();
+        
+        Message m2 = 
+                new Message(
+                        "+27816621422", 
+                        "Where are you? You are late! I have asked you to be on time.",
+                         2
+                );
+        Message m5 =
+                new Message(
+                        "+27816621422",
+                        "Ok, I am leaving without you.",
+                        5
+                );
+        m2.sentMessage(3);
+        m5.sentMessage(3);
+        
+        assertEquals(
+                 "Where are you? You are late! I have asked you to be on time.",
+                  Message.displayLongestMessage()
+        );
+    }
+    @Test
+    public void testSearchRecipient() {
+        Message.storedMessages.clear();
+        
+        Message m2 = new Message(
+                            "+27816621422",
+                            "Where are you? You are late! I have asked you to be on time.",
+                             2 
+        );
+        
+        Message m5 = new Message(
+                            "+27816621422",
+                            "Ok, I am leaving without you.",
+                             5
+        );
+        
+        m2.sentMessages(3);
+        m5.sentMessages(3);
+        
+        assertEquals(
+                "Where are you? You are late! I have asked you to be on time.",
+                Message.displayLongestMessage()
+        );
+    }
+    @Test
+    public void testSearchRecipient() {
+        Message.storedMessages.clear();
+        
+        Message m2 = 
+                new Messages(
+                        "+27816621422",
+                        "Where are you? I have asked you to be on time.",
+                         2
+                );
+        Message m5 = 
+                new Message(
+                        "+27816621422",
+                        "Ok, I am leaving without you.",
+                         5 
+                );
+        
+        m2.sentMessage(3);
+        m5.sentMessage(3);
+        
+        String result =
+                Message.searchRecipient(
+                        "+27816621422"
+                );
+        
+        assertTrue(
+                 result.contains(
+                           "Ok, I am leaving wihtout you."
+                 )
+        );
+    }
+    @Test 
+    public void testDeleteMessageUsingHash() {
+        Message.storedMessages.clear();
+        
+        Message m2 = new Message(
+                            "+27816621422",
+                            "Where are you? You are late! I have asked you to be on time.",
+                             2
+        );
+        
+        m2.sentMessage(3);
+        String result = 
+                Message.deletedByHash(
+                        m2.getMessageHash()
+                );
+        assertTrue(
+                result.contains(
+                        "successfully deleted"
+                )
+        );
+    }
+    @Test
+    public void testMessageIDLength() {
+        Message msg = 
+                new Message(
+                        "+27816621422", 
+                        "Did you get the cake?", 
+                        1
+                );
+        assertTrue(
+                msg.checkMessageID()
+        );
+    }
+    @Test
+    public void testRecipientValidation() {
+       Message msg = new Message(
+               "+27683170147", 
+               "Did you get the cake?", 
+               1
+       );
+       
+       assertEquals(
+               "Cell phone number succesfully captured.", 
+               msg.checkRecipientCell()
+       );
+    }
+    @Test
+    public void testRecipientValidation() {
+        Message msg = new Message(
+                "+27683170147", 
+                "Did you get the cake?", 
+                1
+        );
+        assertEquals(
+                "Cell phone number successfully captured.", 
+                msg.checkRecipientCell()
+        );
+    }
+    @Test
+    public void testMessageLength() {
+        Message msg = 
+                new Message(
+                        "+27683170147", 
+                        "Hello", 
+                        1
+                );
+        
+        assertEquals(
+                "Message ready to send.", 
+                msg.checkMessageLength()
+        );
+    }
+}
