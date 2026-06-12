@@ -1,0 +1,158 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ */
+
+package com.mycompany.chatapp;
+
+/**
+ *
+ * @author Millie
+ */
+public class Chatapp {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        Login login = new Login();
+        // REGISTER 
+        System.out.println("=== REGISTER ===");
+        
+        System.out.print("Enter first name: ");
+        String firstName = input.nextLine();
+        
+        System.out.print("Enter last name: ");
+        String lastName = input.nextLine();
+        
+        System.out.println("Enter username: ");
+        String username = input.nextLine();
+        
+        System.out.print("Enter password: ");
+        String password = input.nextLine();
+        
+        System.out.print("Enter cell phone (+27...): ");
+        String phone = input.nextLine();
+        
+        String result = 
+                login.registerUser(
+                firstName, 
+                        lastName, 
+                        username, 
+                        password, 
+                        phone 
+                );
+        System.out.println(result);
+        
+        // LOGIN 
+        System.out.println("\n=== LOGIN ===");
+        System.err.print("Enter username: ");
+        String loginUser = 
+                input.nextLine();
+        
+        System.out.print("Enter password: ");
+        String loginPass = 
+                input.nextLine();
+        
+        boolean status = login.loginUser(
+                                loginUser, 
+                                loginPass
+                         );
+        System.out.println(login.returnLoginStaus(status)); 
+        if (!status) { 
+            System.out.println("Login failed");
+            return; 
+        }
+        // PART 2 
+        System.out.println("\n=== QUICKCHAT ===");
+        System.out.print("How many messages would you like to send? ");
+        int numMessages = Integer.parseInt(input.nextLine());
+        int messagesCreated = 0;
+        while (messagesCreated < numMessages) {
+            System.out.println("\nMessage "
+                                        + (messagesCreated + 1)
+            );
+            System.out.print("Recipient: ");
+            String recipient = input.nextLine(); 
+            System.out.print("Message: ");   
+            String messageText = input.nextLine();
+            
+            Message message = new Message(recipient, 
+                    messageText, 
+                    messagesCreated + 1
+            );
+            System.out.println(messages.checkMessageLength()
+            );
+            System.out.println(message.checkRecipientCell()
+            );
+            System.out.println(message.checkMessageLength()
+            );
+            System.out.println("\n1. Send");
+            System.out.println("2. Disregard");
+            System.out.println("3. Store"); 
+            System.out.print("Choice: ");
+            int choice = 
+                    integer.parseInt(
+                            input.nextLine()
+                    );
+            System.out.println(message.sentMessage(choice)
+            );
+            messagesCreated++;
+        }
+        // PART 3 MENU
+        int menuChoice;
+                do {
+                    System.out.println("\n===== STORED MESSAGES MENU =====");
+                    System.out.println("1. Display Stored Messages");
+                    System.out.println("2. Display Longest Message");
+                    System.out.println("3. Search Message ID");
+                    System.out.println("4. Search Recipient");
+                    System.out.println("5. Delete Using Hash");
+                    System.out.println("6. Display Report");
+                    System.out.println("7. Exit");
+                    System.out.print("Select option: ");
+                    menuChoice = 
+                            Integer.parseInt(input.nextLine()
+                            );
+                    switch (menuChoice) { 
+                        
+                        case 1: 
+                            System.out.println(Message.displayStoredMessages()
+                            );
+                            break; 
+                        case 2: 
+                            System.out.println(Message.displayLongestMessage()
+                            );
+                            break; 
+                        case 3: 
+                            System.out.print("Enter Message ID: ");
+                            String id = input.nextLine();
+                            System.out.println(Message.searchMessageID(id)
+                            );
+                            break; 
+                        case 4: 
+                            System.out.print("Enter Recipient: ");
+                            String recipient = input.nextLine();
+                            System.out.println(Message.searchRecipient(recipient)
+                            );
+                            break;
+                        case 5: 
+                            System.out.print("Enter Message Hash: ");
+                            String hash = input.nextLine();
+                            System.out.println(Message.deleteByHash()
+                            );
+                            break; 
+                        case 6: 
+                            System.out.println(Message.displayReport()
+                            );
+                            break;
+                        case 7: 
+                            System.out.println("Program Ended.");
+                            break; 
+                        default: 
+                            System.out.println("Invalid option.");
+                    }
+                }
+                while (menuChoice != 7);
+                System.out.println("\nTotal messages sent: "
+                                            Message.sentMessages.size()
+                );
+                input.close();
+    }
+}
